@@ -20,12 +20,13 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, telefone } = req.body;
 
   const newUser = {
     id: Math.random().toString(36),
     name,
     email,
+    telefone
   };
 
   users.push(newUser);
@@ -53,12 +54,13 @@ app.get("/artistas", (req, res) => {
 });
 
 app.post("/artistas", (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, telefone } = req.body;
 
   const newartistas = {
     id: Math.random().toString(36),
     name,
     email,
+    telefone
   };
 
   artistas.push(newartistas);
@@ -75,6 +77,42 @@ app.delete("/artistas/:id", (req, res) => {
   }
 
   artistas.splice(index, 1);
+  return res.status(204).json();
+});
+
+// ### ROTAS PARA PRODUTOS
+const produtos = [];
+
+app.get("/produtos", (req, res) => {
+  return res.json(produtos);
+});
+
+app.post("/produtos", (req, res) => {
+  const { name, preco, material, avaliacao, id_vendedor } = req.body;
+
+  const newprodutos = {
+    id: Math.random().toString(36),
+    name,
+    preco,
+    material,
+    avaliacao,
+    id_vendedor
+  };
+
+  produtos.push(newprodutos);
+  return res.json(newprodutos);
+});
+
+app.delete("/produtos/:id", (req, res) => {
+  const { id } = req.params;
+
+  const index = produtos.findIndex((user) => user.id === id);
+
+  if (index < 0) {
+    return res.status(404).json({ error });
+  }
+
+  produtos.splice(index, 1);
   return res.status(204).json();
 });
 
