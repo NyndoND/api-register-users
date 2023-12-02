@@ -7,11 +7,13 @@ app.use(cors());
 
 const port = process.env.PORT || 3001;
 
+app.get("/", (req, res) => {
+  return res.json("Artplace API status: OK");
+});
+
+// ### ROTAS PARA CLIENTES
 const users = [];
 
-app.get("/", (req, res) => {
-  return res.json("hello world");
-});
 
 app.get("/users", (req, res) => {
   return res.json(users);
@@ -40,6 +42,39 @@ app.delete("/users/:id", (req, res) => {
   }
 
   users.splice(index, 1);
+  return res.status(204).json();
+});
+
+// ### ROTAS PARA ARTISTAS
+const artistas = [];
+
+app.get("/artistas", (req, res) => {
+  return res.json(artistas);
+});
+
+app.post("/artistas", (req, res) => {
+  const { name, email } = req.body;
+
+  const newartistas = {
+    id: Math.random().toString(36),
+    name,
+    email,
+  };
+
+  artistas.push(newartistas);
+  return res.json(newartistas);
+});
+
+app.delete("/artistas/:id", (req, res) => {
+  const { id } = req.params;
+
+  const index = artistas.findIndex((user) => user.id === id);
+
+  if (index < 0) {
+    return res.status(404).json({ error });
+  }
+
+  artistas.splice(index, 1);
   return res.status(204).json();
 });
 
