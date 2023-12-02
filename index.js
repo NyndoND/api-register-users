@@ -88,7 +88,7 @@ app.get("/produtos", (req, res) => {
 });
 
 app.post("/produtos", (req, res) => {
-  const { name, preco, material, avaliacao, id_vendedor } = req.body;
+  const { name, preco, material, avaliacao, id_artista } = req.body;
 
   const newprodutos = {
     id: Math.random().toString(36),
@@ -96,7 +96,7 @@ app.post("/produtos", (req, res) => {
     preco,
     material,
     avaliacao,
-    id_vendedor
+    id_artista
   };
 
   produtos.push(newprodutos);
